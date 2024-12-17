@@ -1,3 +1,8 @@
+# Environment file
 .env
-package-lock.json
+
+# Dependency folder
 node_modules/
+
+# Lock file
+package-lock.json
