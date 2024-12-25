@@ -30,7 +30,9 @@ export const signUp = async (req, res) => {
 export const signIn = async (req, res) => {
   try {
     const response = await signInService(req.body);
-    return res.status(StatusCodes.OK).json(successResponse(response, 'User signed in successfully'));
+    return res
+      .status(StatusCodes.OK)
+      .json(successResponse(response, 'User signed in successfully'));
   } catch (error) {
     console.error('User controller error:', error);
 
