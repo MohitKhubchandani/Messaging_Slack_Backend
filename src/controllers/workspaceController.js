@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { createWorkspaceService } from '../services/worospaceService';
-import { customErrorResponse, internalErrorResponse, successResponse } from '../utils/common/responseObjects';
+import { createWorkspaceService } from '../services/worospaceService.js';
+import { customErrorResponse, internalErrorResponse, successResponse } from '../utils/common/responseObjects.js';
 
 export const createWorkspaceController = async (req, res) => {
     try {
