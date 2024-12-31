@@ -1,6 +1,9 @@
+import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 
+import channelRepository from '../repositories/channelRepository.js';
 import workspaceRepository from '../repositories/workspaceRepository.js';
+import ClientError from '../utils/errors/clientError.js';
 import validationError from '../utils/errors/validationError.js';
 
 export const createWorkspaceService = async (workspaceData) => {
@@ -57,3 +60,39 @@ export const getWorkspacesUserIsMemberOfService = async (userId) => {
   }
 };
 
+export const deleteWorkspaceService = async (workspaceId, userId) => {  
+
+  try {
+    
+    const workspace = await workspaceRepository.getById(workspaceId);
+    if (!workspace) {
+      throw new ClientError({
+        explanation: 'Workspace not found',
+        message: 'Workspace not found',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
+    const isAllowed = workspace.members.find((member) => member.memberId.toString() === userId && member.role === 'admin');
+  
+    // const channelIds = workspace.channels.map((channel) => channel._id);
+  
+    if (isAllowed) {
+      await channelRepository.deleteMany(workspace.channels)
+      const response = await workspaceRepository.delete(workspaceId);
+    
+      return response;
+    };
+
+    throw new ClientError({
+      explanation: 'User is either not an admin or not a member of the workspace',
+      message: 'User is not allowed to delete workspace',
+      statusCode: StatusCodes.UNAUTHORIZED
+    });
+  
+
+
+  } catch (error) {
+    console.log('delete workspace service error', error);
+    throw error;
+  }
+}
