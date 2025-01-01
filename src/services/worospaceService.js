@@ -22,7 +22,7 @@ export const createWorkspaceService = async (workspaceData) => {
     'admin'
     ); // add owner as admin to workspace
 
-    const updatedWorkspace = (await workspaceRepository.addChannelToWorkspace(response._id, 'general')); // add general channel to workspace
+    const updatedWorkspace = await workspaceRepository.addChannelToWorkspace(response._id, 'general'); // add general channel to workspace
 
     return updatedWorkspace; // return workspace data
     
@@ -47,3 +47,13 @@ export const createWorkspaceService = async (workspaceData) => {
     }
    }
    
+export const getWorkspacesUserIsMemberOfService = async (userId) => {
+  try {
+    const response = await workspaceRepository.fetchAllWorkspaceByMemberId(userId); // get workspaces user is member of
+    return response; // return workspaces user is member of
+  } catch (error) {
+    console.log('get workspaces user is member of service error', error);
+    throw error;
+  }
+};
+

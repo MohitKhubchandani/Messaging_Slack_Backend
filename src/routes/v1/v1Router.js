@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.use('/users', userRouter);
 
-router.use('/workspace', workspaceRouter);
+router.use('/workspaces', workspaceRouter);
 
 export default router;

@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { createWorkspaceService } from '../services/worospaceService.js';
+import { createWorkspaceService, getWorkspacesUserIsMemberOfService } from '../services/worospaceService.js';
 import { customErrorResponse, internalErrorResponse, successResponse } from '../utils/common/responseObjects.js';
 
 export const createWorkspaceController = async (req, res) => {
@@ -23,4 +23,22 @@ export const createWorkspaceController = async (req, res) => {
       .json(internalErrorResponse(error));
     }
 
+}
+
+export const getWorkspacesUserIsMemberOfController = async (req, res) => {
+    try {
+        const response = await getWorkspacesUserIsMemberOfService(req.user);
+        return res.status(StatusCodes.OK).json(successResponse(response, 'Workspaces fetched successfully'));
+    } catch (error) {
+        console.error('User controller error:', error); // Use proper logging in production
+
+    // Check for the correct statusCode property (lowercase 's')
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+    }
 }
