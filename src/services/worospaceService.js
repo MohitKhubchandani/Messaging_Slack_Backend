@@ -95,4 +95,10 @@ export const deleteWorkspaceService = async (workspaceId, userId) => {
     console.log('delete workspace service error', error);
     throw error;
   }
-}
+};
+
+export const getWrokspaceService = async (workspaceId, userId) => {};
+export const getWrokspaceByJoinCodeService = async (joinCode) => {};
+export const updateWrokspaceService = async (workspaceId, workspaceData, userId) => {};
+export const addMemberToWorkspaceService = async (workspaceId, memberId, role) => {};
+export const addChannelToWrokspaceService = async (workspaceId, channelName) => {};
