@@ -97,8 +97,26 @@ export const deleteWorkspaceService = async (workspaceId, userId) => {
   }
 };
 
-export const getWrokspaceService = async (workspaceId, userId) => {};
-export const getWrokspaceByJoinCodeService = async (joinCode) => {};
-export const updateWrokspaceService = async (workspaceId, workspaceData, userId) => {};
-export const addMemberToWorkspaceService = async (workspaceId, memberId, role) => {};
-export const addChannelToWrokspaceService = async (workspaceId, channelName) => {};
+export const getWrokspaceService = async (workspaceId, userId) => {
+  const response = await workspaceRepository.getById(workspaceId);
+  if (!response) {
+    throw new ClientError({
+      explanation: 'Workspace not found',
+      message: 'Workspace not found',
+      statusCode: StatusCodes.NOT_FOUND
+    });
+  }
+  const isMember = response.members.find((member) => member.memberId.toString() === userId);
+  if (!isMember) {
+    throw new ClientError({
+      explanation: 'User is not a member of the workspace',
+      message: 'User is not a member of the workspace',
+      statusCode: StatusCodes.UNAUTHORIZED
+    });
+  }
+  return response;
+};
+// export const getWrokspaceByJoinCodeService = async (joinCode) => {};
+// export const updateWrokspaceService = async (workspaceId, workspaceData, userId) => {};
+// export const addMemberToWorkspaceService = async (workspaceId, memberId, role) => {};
+// export const addChannelToWrokspaceService = async (workspaceId, channelName) => {};
