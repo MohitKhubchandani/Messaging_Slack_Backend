@@ -28,9 +28,7 @@ const workspaceRepository = {
 
   // get workspace by join code
   getWorkSpaceByJoinCode: async function (joinCode) {
-    const workspace = await Workspace.findOne({
-      joinCode
-    }); // find workspace by join code
+    const workspace = await Workspace.findOne({joinCode}); // find workspace by join code
 
     if (!workspace) {
       throw new ClientError({
@@ -111,9 +109,9 @@ const workspaceRepository = {
       });
     } // if channel is already part of workspace, throw error
 
-    const channel = await channelRepository.create({name: channelName}); // create channel
+    const newChannel = await channelRepository.create({name: channelName}); // create channel
 
-    workspace.channels.push(channel); // add channel to workspace
+    workspace.channels.push(newChannel); // add channel to workspace
 
     workspace.save(); // save workspace
 

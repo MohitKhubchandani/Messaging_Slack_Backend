@@ -116,7 +116,18 @@ export const getWrokspaceService = async (workspaceId, userId) => {
   }
   return response;
 };
-// export const getWrokspaceByJoinCodeService = async (joinCode) => {};
+
+export const getWrokspaceByJoinCodeService = async (joincode) => {
+  const response = await workspaceRepository.getWorkSpaceByJoinCode(joincode);
+  if (!response) {
+    throw new ClientError({
+      explanation: 'Workspace not found',
+      message: 'Workspace not found',
+      statusCode: StatusCodes.NOT_FOUND
+    });
+  }
+  return response;
+};
 // export const updateWrokspaceService = async (workspaceId, workspaceData, userId) => {};
 // export const addMemberToWorkspaceService = async (workspaceId, memberId, role) => {};
 // export const addChannelToWrokspaceService = async (workspaceId, channelName) => {};

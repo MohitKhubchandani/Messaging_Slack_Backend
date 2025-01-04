@@ -4,6 +4,7 @@ import {
   createWorkspaceService,
   deleteWorkspaceService,
   getWorkspacesUserIsMemberOfService,
+  getWrokspaceByJoinCodeService,
   getWrokspaceService
 } from '../services/workospaceService.js';
 import {
@@ -97,3 +98,23 @@ export const getWorkspaceController = async (req, res) => {
       .json(internalErrorResponse(error));
   }
 };
+
+export const getWorkspaceByJoinCodeController = async (req, res) => {
+  try {
+    const response = await getWrokspaceByJoinCodeService(req.params.joincode);
+    
+    return res
+      .status(StatusCodes.OK)
+      .json(successResponse(response, 'Workspace fetched successfully'));
+  } catch (error) {
+    console.error('User controller error:', error);
+
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+  }
+}
