@@ -1,11 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
 
 import {
+  addMemberToWorkspaceService,
   createWorkspaceService,
   deleteWorkspaceService,
   getWorkspacesUserIsMemberOfService,
   getWrokspaceByJoinCodeService,
-  getWrokspaceService
+  getWrokspaceService,
+  updateWrokspaceService
 } from '../services/workospaceService.js';
 import {
   customErrorResponse,
@@ -107,7 +109,7 @@ export const getWorkspaceByJoinCodeController = async (req, res) => {
       .status(StatusCodes.OK)
       .json(successResponse(response, 'Workspace fetched successfully'));
   } catch (error) {
-    console.error('User controller error:', error);
+    console.error('Get workspace by joinCode controller error:', error);
 
     if (error.statusCode) {
       return res.status(error.statusCode).json(customErrorResponse(error));
@@ -117,4 +119,48 @@ export const getWorkspaceByJoinCodeController = async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(internalErrorResponse(error));
   }
-}
+};
+
+export const updatedWorkspaceController = async (req, res) => {
+  try{   
+    const response = await updateWrokspaceService(req.params.workspaceId, req.body, req.user);
+    
+    return res
+    .status(StatusCodes.OK)
+    .json(successResponse(response, 'Workspace Updated successfully'));
+
+  }catch(error){
+    console.log('Update Workspace controller error:', error);
+
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+  }
+ }
+
+ export const addMemberToWorkspaceController = async (req, res) => {
+  try{   
+    const response = await addMemberToWorkspaceService(req.params.workspaceId, req.body.memberId,  req.body.role || 'member');
+
+    
+    return res
+    .status(StatusCodes.OK)
+    .json(successResponse(response, 'Member Added to Workspace successfully'));
+
+  }catch(error){
+    console.log('add members to Workspace controller error:', error);
+
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+  }
+ }
+

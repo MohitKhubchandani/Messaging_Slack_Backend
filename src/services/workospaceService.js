@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 
 import channelRepository from '../repositories/channelRepository.js';
+import userRepository from '../repositories/userRepository.js';
 import workspaceRepository from '../repositories/workspaceRepository.js';
 import ClientError from '../utils/errors/clientError.js';
 import validationError from '../utils/errors/validationError.js';
@@ -178,9 +179,11 @@ export const updateWrokspaceService = async (workspaceId, workspaceData, userId)
     throw error;
   }
 };
+
 export const addMemberToWorkspaceService = async (workspaceId, memberId, role) => {
   try {
     const workspace = await workspaceRepository.getById(workspaceId);
+    
     if (!workspace) {
       throw new ClientError({
         explanation: 'Workspace not found',
@@ -189,7 +192,9 @@ export const addMemberToWorkspaceService = async (workspaceId, memberId, role) =
       });
     }
 
-    const isValidUser = await workspaceRepository.getById(memberId);
+    const isValidUser = await userRepository.getById(memberId);
+    
+    
     if (!isValidUser) {
       throw new ClientError({
         explanation: 'User not found',
@@ -199,10 +204,11 @@ export const addMemberToWorkspaceService = async (workspaceId, memberId, role) =
     }
   
     const isMember = isUserMemberOfWorkspace(workspace, memberId);
-    if (!isMember) {
+    
+    if (isMember) {
       throw new ClientError({
-        explanation: 'User is not a member of the workspace',
-        message: 'User is not a member of the workspace',
+        explanation: 'User is Already a member of the workspace',
+        message: 'User is Already a member of the workspace',
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }
