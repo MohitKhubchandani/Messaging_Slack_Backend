@@ -101,7 +101,7 @@ export const getWorkspaceController = async (req, res) => {
 
 export const getWorkspaceByJoinCodeController = async (req, res) => {
   try {
-    const response = await getWrokspaceByJoinCodeService(req.params.joincode);
+    const response = await getWrokspaceByJoinCodeService(req.params.joincode, req.user);
     
     return res
       .status(StatusCodes.OK)
