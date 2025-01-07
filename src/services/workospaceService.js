@@ -16,7 +16,7 @@ const isUserMemberOfWorkspace = (workspace, userId) => {
 };
 
 const isChannelAlreadyPartOfWorkspace = (workspace, channelName) => {
-  return workspace.channels.find((channel) => channel.name.toLowerCase() === channelName.toLowerCase());
+  return workspace.channels.find((channel) => channel.name === channelName);
 }
 
 export const createWorkspaceService = async (workspaceData) => {
@@ -180,7 +180,7 @@ export const updateWrokspaceService = async (workspaceId, workspaceData, userId)
   }
 };
 
-export const addMemberToWorkspaceService = async (workspaceId, memberId, role) => {
+export const addMemberToWorkspaceService = async (workspaceId, memberId, role, userId) => {
   try {
     const workspace = await workspaceRepository.getById(workspaceId);
     
@@ -192,9 +192,16 @@ export const addMemberToWorkspaceService = async (workspaceId, memberId, role) =
       });
     }
 
+    const isAdmin = isUserAdminOfWorkspace(workspace, userId);
+    if (!isAdmin) {
+      throw new ClientError({
+        explanation: 'User is not an admin of the workspace',
+        message: 'User is not an admin of the workspace',
+        statusCode: StatusCodes.UNAUTHORIZED
+      });
+    };
+
     const isValidUser = await userRepository.getById(memberId);
-    
-    
     if (!isValidUser) {
       throw new ClientError({
         explanation: 'User not found',

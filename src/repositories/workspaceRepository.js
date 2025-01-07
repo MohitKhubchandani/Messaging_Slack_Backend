@@ -115,7 +115,7 @@ const workspaceRepository = {
       });
     } // if channel is already part of workspace, throw error
 
-    const newChannel = await channelRepository.create({name: channelName}); // create channel
+      const newChannel = await channelRepository.create({name: channelName, workspace: workspaceId}); // create channel
 
     workspace.channels.push(newChannel); // add channel to workspace
 
