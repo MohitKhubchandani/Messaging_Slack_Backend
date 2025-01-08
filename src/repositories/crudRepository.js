@@ -22,9 +22,9 @@ export default function crudRepository(model) {
     },
     deleteMany: async function (modelIds) {
       const response = await model.deleteMany({
-        _id: { $in: modelIds }, // delete all channels with ids in the array
+        _id: { $in: modelIds } // delete all channels with ids in the array
       });
       return response;
-    },
+    }
   };
 }

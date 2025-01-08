@@ -10,7 +10,9 @@ const workspaceRepository = {
   ...crudRepository(Workspace),
 
   getWorkspaceDetailsById: async function (workspaceId) {
-    const workspace = await Workspace.findById(workspaceId).populate('members.memberId', 'username email avatar').populate('channels'); // find workspace by id
+    const workspace = await Workspace.findById(workspaceId)
+      .populate('members.memberId', 'username email avatar')
+      .populate('channels'); // find workspace by id
 
     return workspace; // return workspace
   },
@@ -34,7 +36,7 @@ const workspaceRepository = {
 
   // get workspace by join code
   getWorkSpaceByJoinCode: async function (joinCode) {
-    const workspace = await Workspace.findOne({joinCode}); // find workspace by join code
+    const workspace = await Workspace.findOne({ joinCode }); // find workspace by join code
 
     if (!workspace) {
       throw new ClientError({
@@ -72,7 +74,7 @@ const workspaceRepository = {
     const isMemberAlreadyPartOfWorkspace = workspace.members.find(
       (member) => member.memberId == memberId
     ); // check if user is already part of workspace
- 
+
     if (isMemberAlreadyPartOfWorkspace) {
       throw new ClientError({
         explanation: 'Invalid data sent from the client',
@@ -90,10 +92,11 @@ const workspaceRepository = {
 
     return workspace; // return workspace
   },
-  
+
   // add channel to workspace
   addChannelToWorkspace: async function (workspaceId, channelName) {
-      const workspace = await Workspace.findById(workspaceId).populate('channels'); // find workspace by id
+    const workspace =
+      await Workspace.findById(workspaceId).populate('channels'); // find workspace by id
 
     if (!workspace) {
       throw new ClientError({
@@ -115,7 +118,10 @@ const workspaceRepository = {
       });
     } // if channel is already part of workspace, throw error
 
-      const newChannel = await channelRepository.create({name: channelName, workspace: workspaceId}); // create channel
+    const newChannel = await channelRepository.create({
+      name: channelName,
+      workspace: workspaceId
+    }); // create channel
 
     workspace.channels.push(newChannel); // add channel to workspace
 
@@ -127,7 +133,7 @@ const workspaceRepository = {
   // fetch all workspaces by member id
   fetchAllWorkspaceByMemberId: async function (memberId) {
     const workspaces = await Workspace.find({
-      'members.memberId': memberId  
+      'members.memberId': memberId
     }).populate('members.memberId', 'username email avatar'); // find workspaces by member id
 
     return workspaces; // return workspaces
