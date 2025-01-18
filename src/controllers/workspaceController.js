@@ -155,7 +155,7 @@ export const addMemberToWorkspaceController = async (req, res) => {
       req.params.workspaceId,
       req.body.memberId,
       req.body.role || 'member',
-      req.user
+      req.user,
     );
 
     return res

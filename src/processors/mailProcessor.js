@@ -1,7 +1,8 @@
-import mailer from '../config/mailConfig.js'
-import mailQueue from "../queues/mailQueue.js";
 
-mailQueue.process(async (job) => {
+import mailer from '../config/mailConfig.js'
+import mailQueue from '../queues/mailQueue.js';
+
+mailQueue.process( async (job) => {
     const emailData = job.data;
     console.log('processing email', emailData);
 
@@ -10,7 +11,7 @@ mailQueue.process(async (job) => {
         console.log('Email sent', response);
         
     } catch (error) {
-        console.log(error);
+        console.log('Error processing email',error);
     }
     
 })

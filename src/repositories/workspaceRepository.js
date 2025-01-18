@@ -85,7 +85,8 @@ const workspaceRepository = {
 
     workspace.members.push({
       memberId,
-      role
+      role,
+     
     }); // add member to workspace
 
     workspace.save(); // save workspace

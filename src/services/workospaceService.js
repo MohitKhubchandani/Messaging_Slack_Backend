@@ -193,7 +193,7 @@ export const addMemberToWorkspaceService = async (
   workspaceId,
   memberId,
   role,
-  userId
+  userId,
 ) => {
   try {
     const workspace = await workspaceRepository.getById(workspaceId);
@@ -237,7 +237,7 @@ export const addMemberToWorkspaceService = async (
     const response = await workspaceRepository.addMemberToWorkspace(
       workspaceId,
       memberId,
-      role
+      role,
     );
 
     addEmaiToMailQueue({
