@@ -11,6 +11,14 @@ export const IsMemberPartOfWorkspaceService = async(
 ) => {
         const workspace = await workspaceRepository.getById(workspaceId)
 
+        if (!workspace) {
+            throw new ClientError({
+                explanation : 'Workspace not found',
+                message : 'Workspace not found',
+                statuscode : StatusCodes.NOT_FOUND 
+            })
+        }
+
         const isUserMember = isUserMemberOfWorkspace(workspace, memberId);
 
         if (!isUserMember) {
