@@ -4,6 +4,7 @@ import crudRepository from './crudRepository.js';
 const messageRepository = {
   ...crudRepository(Message),
   
+   // get paginated messages
     getPaginatedMessages: async function( messageParams, page, limit){
         const messages = await Message.find(messageParams)
         .sort({createdAt: -1})
