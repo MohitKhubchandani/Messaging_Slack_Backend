@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { getMessagesService } from "../services/messageService.js";
 import { customErrorResponse, internalErrorResponse, successResponse } from "../utils/common/responseObjects.js";
 
-// This controller function is responsible for fetching messages from a channel
+// This controller function is responsible for fetching messages from a channel 
 export const getMessages = async (req, res) => {
     try {
 
@@ -11,7 +11,9 @@ export const getMessages = async (req, res) => {
             channelId: req.params.channelId,
         }, 
         req.query.page || 1,
-        req.query.limit || 20);
+        req.query.limit || 20,
+        req.user
+      );
         
         return res
           .status(StatusCodes.OK)
