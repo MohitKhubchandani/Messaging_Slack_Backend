@@ -1,6 +1,7 @@
 
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
+import {Server} from 'socket.io';
 
 import bullServerAdapter from './config/bullBoardConfig.js';
 import connectDB from './config/dbConfig.js';
