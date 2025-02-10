@@ -2,7 +2,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { StatusCodes } from 'http-status-codes';
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 
 import bullServerAdapter from './config/bullBoardConfig.js';
 import connectDB from './config/dbConfig.js';
@@ -26,6 +26,14 @@ app.use('/ping', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
+
+  io.emit('message', 'Hello from server');
+
+  socket.on('messageFromClient', (data) => {
+    console.log('Message from client',data);
+
+    socket.broadcast.emit('new message', data.toUpperCase());
+  })
   
 })
   
