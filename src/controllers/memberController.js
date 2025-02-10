@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 
-import { IsMemberPartOfWorkspaceService } from "../services/memberService";
-import { customErrorResponse, internalErrorResponse, successResponse } from "../utils/common/responseObjects";
+import { IsMemberPartOfWorkspaceService } from "../services/memberService.js";
+import { customErrorResponse, internalErrorResponse, successResponse } from "../utils/common/responseObjects.js";
 
 export const isMemberPartOfWorkspaceController = async(req, res) => {
     try {
