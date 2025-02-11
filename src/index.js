@@ -7,6 +7,7 @@ import { Server } from 'socket.io';
 import bullServerAdapter from './config/bullBoardConfig.js';
 import connectDB from './config/dbConfig.js';
 import { PORT } from './config/serverConfig.js';
+import messageHandlers from './controllers/messageSocketController.js';
 import apiRouter from './routes/apiRoutes.js';
 const app = express();
 const server = createServer(app);
@@ -29,11 +30,7 @@ io.on('connection', (socket) => {
 
   io.emit('message', 'Hello from server');
 
-  socket.on('messageFromClient', (data) => {
-    console.log('Message from client',data);
-
-    socket.broadcast.emit('new message', data.toUpperCase());
-  })
+  messageHandlers(io, socket);
   
 })
   
