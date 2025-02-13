@@ -30,9 +30,8 @@ export const getMessagesService = async (messageParams, page, limit, user) => {
     return messages;
 };
 
+// Create a new message
 export const createMessageService = async (message) => {
-    
     const newMessage = await messageRepository.create(message);
-    
     return newMessage;
 }

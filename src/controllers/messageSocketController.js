@@ -1,6 +1,7 @@
 import { createMessageService } from "../services/messageService.js";
 import { NEW_MESSAGE_EVENT, NEW_MESSAGE_RECEIVED_EVENT } from "../utils/common/eventConstants.js";
 
+// messageHandlers function is used to handle the event when a new message is created.
 export default function messageHandlers(io, socket){
   socket.on(NEW_MESSAGE_EVENT, async function createMessageHandler(data, cb){
   

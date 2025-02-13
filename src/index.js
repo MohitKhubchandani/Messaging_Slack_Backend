@@ -13,28 +13,27 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server)
 
-
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended : true}));
 
-
+// Bull board
 app.use('/ui', bullServerAdapter.getRouter());
  
+// Routes
 app.use('/api', apiRouter);
 app.use('/ping', (req, res) => {
   return res.status(StatusCodes.OK).json({ message: 'Pong' });
 });
 
+// Socket.io connection
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
-
   io.emit('message', 'Hello from server');
-
   messageHandlers(io, socket);
-  
 })
   
-
+// Start the server
 server.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}`);
   connectDB();
