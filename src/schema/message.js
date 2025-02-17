@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+// message schema
 const messageSchema = new mongoose.Schema({
   body: {
     type: String,
