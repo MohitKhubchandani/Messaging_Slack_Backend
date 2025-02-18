@@ -5,6 +5,7 @@ import messageRepository from "../repositories/messageRepository.js"
 import ClientError from "../utils/errors/clientError.js";
 import { isUserMemberOfWorkspace } from "./workospaceService.js";
 
+// Message service to get messages
 export const getMessagesService = async (messageParams, page, limit, user) => {
     
     const channelDetails = await channelRepository.getChannelWithWorkspaceDetails(messageParams.channelId);
