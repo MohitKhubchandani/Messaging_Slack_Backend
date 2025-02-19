@@ -5,6 +5,7 @@ import workspaceRepository from "../repositories/workspaceRepository.js"
 import ClientError from "../utils/errors/clientError.js";
 import { isUserMemberOfWorkspace } from "./workospaceService.js"
 
+// Check if a user is a member of a workspace
 export const IsMemberPartOfWorkspaceService = async(
     workspaceId,
     memberId
