@@ -1,6 +1,6 @@
 import Message from '../schema/message.js';
 import crudRepository from './crudRepository.js';
-
+// Message repository
 const messageRepository = {
   ...crudRepository(Message),
   
