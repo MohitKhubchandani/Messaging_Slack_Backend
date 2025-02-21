@@ -1,3 +1,4 @@
+
 export default function crudRepository(model) {
   return {
     create: async function (data) {
