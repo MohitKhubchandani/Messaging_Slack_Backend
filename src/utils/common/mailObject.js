@@ -1,5 +1,5 @@
 import { MAIL_ID } from "../../config/serverConfig.js";
-
+// workspace join mail
 export const workspaceJoinMail = function(workspace){
     return {
     from: MAIL_ID,
