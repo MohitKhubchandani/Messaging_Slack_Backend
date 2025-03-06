@@ -34,7 +34,8 @@ io.on('connection', (socket) => {
   messageSocketHandlers(io, socket);
   channelSocketHandlers(io, socket);
 })
-  
+
+
 // Start the server
 server.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}`);
