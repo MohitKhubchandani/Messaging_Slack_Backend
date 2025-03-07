@@ -1,6 +1,6 @@
 
 import { JOIN_CHANNEL } from "../utils/common/eventConstants.js"
-
+//  join channel handler
 export default function channelSocketHandlers(io, socket) {
 
     socket.on(JOIN_CHANNEL, async function joinChannelHandler(data, cb) {
