@@ -1,12 +1,12 @@
-import Message from '../schema/message.js';
+import message from '../schema/message.js';
 import crudRepository from './crudRepository.js';
 // Message repository
 const messageRepository = {
-  ...crudRepository(Message),
+  ...crudRepository(message),
   
    // get paginated messages
-    getPaginatedMessages: async function( messageParams, page, limit){
-        const messages = await Message.find(messageParams)
+    getPaginatedMessages: async function(messageParams, page, limit){
+        const messages = await message.find(messageParams)
         .sort({createdAt: -1})
         .skip((page - 1) * limit)
         .limit(limit)

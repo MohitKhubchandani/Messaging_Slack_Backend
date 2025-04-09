@@ -11,6 +11,7 @@ import {
 export const getChannelByIdController = async (req, res) => {
     try {
         const response = await getChannelByIdService(req.params.channelid, req.user);
+        
         return res.status(StatusCodes.OK).json(successResponse(response, 'channel fetched successfully'));
     } catch (error) {
         console.log('add getChannelById controller error:', error);

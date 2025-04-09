@@ -31,6 +31,7 @@ app.use('/ping', (req, res) => {
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
   io.emit('message', 'Hello from server');
+  
   messageSocketHandlers(io, socket);
   channelSocketHandlers(io, socket);
 })

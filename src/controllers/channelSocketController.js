@@ -2,18 +2,14 @@
 import { JOIN_CHANNEL } from "../utils/common/eventConstants.js"
 //  join channel handler
 export default function channelSocketHandlers(io, socket) {
-
-    socket.on(JOIN_CHANNEL, async function joinChannelHandler(data, cb) {
-        const roomId = data.channelId;
-        socket.join(roomId);
-        if (typeof cb === 'function') {
-            cb({
-              success: true,
-              message: 'Successfully created the message',
-              data: roomId,
-            });
-          } else {
-            console.log("No callback function provided (likely from Postman or another client)");
-          }
-        });
+  socket.on(JOIN_CHANNEL, function joinChannelHandler(data, cb) {
+    const roomId = data.channelId;
+    socket.join(roomId);
+    console.log(`User ${socket.id} joined the channel: ${roomId}`);
+    cb?.({
+      success: true,
+      message: 'Successfully joined the channel',
+      data: roomId
+    });
+  });
 }
